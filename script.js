@@ -54,6 +54,27 @@ function playGame() {
             console.log(`You win! ${lowerHumanChoice} beats ${computerChoice}.`);
             humanScore ++;
         };
-
     };
+
+    // Loop the play round function 5 times simulate 5 games
+    for (let i = 0; i < 5; i++) {
+        // get a new user choice each time
+        const userSelection = getHumanChoice();
+
+        // get a new computer choice each time
+        const computerSelection = getComputerChoice();
+
+        // Run playRound function with new choice
+        playRound(userSelection, computerSelection);
+    }
+
+    // Compare User's score against computer's score to determine winner
+    if (humanScore > computerScore) {
+        console.log(`You win! The score was ${humanScore}:${computerScore}`)
+    } else if (humanScore < computerScore) {
+        console.log(`You lose! The score was ${humanScore}:${computerScore}`)
+    } else {
+        console.log(`You drew! The score was ${humanScore}:${computerScore}`)};
 }
+
+playGame()

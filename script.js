@@ -23,37 +23,37 @@ function getHumanChoice() {
     return userChoice;
 }
 
-// Create an integer variable named humanScore to keep track of user's score
-let humanScore = 0;
-// Create an integer variable named computerScore to keep track of the computer's score
-let computerScore = 0;
+// Create function to simulate 5 round of the game
+function playGame() {
+    // Create an integer variable named humanScore to keep track of user's score
+    let humanScore = 0;
+    // Create an integer variable named computerScore to keep track of the computer's score
+    let computerScore = 0;
 
-// Simulate a round of play between the computer and user
-function playRound(humanChoice,computerChoice) {
-    // convert human choice to lower case so game is none case sensitive
-    const lowerHumanChoice = humanChoice.toLowerCase()
-    // If the computer choice and human choice is the same it is a draw
-    if (lowerHumanChoice === computerChoice) {
-        console.log(`You draw! You both chose ${lowerHumanChoice}`)
-        
-        // Exit function so next if statement does run
-        return
-    }
+    // Simulate a round of play between the computer and user
+    function playRound(humanChoice,computerChoice) {
+        // convert human choice to lower case so game is none case sensitive
+        const lowerHumanChoice = humanChoice.toLowerCase();
+        // If the computer choice and human choice is the same it is a draw
+        if (lowerHumanChoice === computerChoice) {
+            console.log(`You draw! You both chose ${lowerHumanChoice}`);
+            
+            // Exit function so next if statement does run
+            return;
+        }
 
-    // If human loses to computer
-    if ((lowerHumanChoice === "rock" && computerChoice === "paper")
-        || (lowerHumanChoice === "paper" && computerChoice === "scissors")
-        || (lowerHumanChoice  === "scissors" && computerChoice === "rock")
-    ) {
-        console.log(`You lose! ${computerChoice} beats ${lowerHumanChoice}.`)
-    } else {
-        // Remaining choice is if human wins
-        console.log(`You win! ${lowerHumanChoice} beats ${computerChoice}.`)
-    }
+        // If human loses to computer
+        if ((lowerHumanChoice === "rock" && computerChoice === "paper")
+            || (lowerHumanChoice === "paper" && computerChoice === "scissors")
+            || (lowerHumanChoice  === "scissors" && computerChoice === "rock")
+        ) {
+            console.log(`You lose! ${computerChoice} beats ${lowerHumanChoice}.`);
+            computerScore ++;
+        } else {
+            // Remaining choice is if human wins
+            console.log(`You win! ${lowerHumanChoice} beats ${computerChoice}.`);
+            humanScore ++;
+        };
 
+    };
 }
-
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
-
-playRound(humanSelection, computerSelection);

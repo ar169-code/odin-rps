@@ -23,58 +23,64 @@ function getHumanChoice() {
     return userChoice;
 }
 
-// Create function to simulate 5 round of the game
-function playGame() {
-    // Create an integer variable named humanScore to keep track of user's score
-    let humanScore = 0;
-    // Create an integer variable named computerScore to keep track of the computer's score
-    let computerScore = 0;
 
-    // Simulate a round of play between the computer and user
-    function playRound(humanChoice,computerChoice) {
-        // convert human choice to lower case so game is none case sensitive
-        const lowerHumanChoice = humanChoice.toLowerCase();
-        // If the computer choice and human choice is the same it is a draw
-        if (lowerHumanChoice === computerChoice) {
-            console.log(`You draw! You both chose ${lowerHumanChoice}`);
-            
-            // Exit function so next if statement does run
-            return;
-        }
+// Create an integer variable named humanScore to keep track of user's score
+let playerScore = 0;
+// Create an integer variable named computerScore to keep track of the computer's score
+let computerScore = 0;
 
-        // If human loses to computer
-        if ((lowerHumanChoice === "rock" && computerChoice === "paper")
-            || (lowerHumanChoice === "paper" && computerChoice === "scissors")
-            || (lowerHumanChoice  === "scissors" && computerChoice === "rock")
-        ) {
-            console.log(`You lose! ${computerChoice} beats ${lowerHumanChoice}.`);
-            computerScore ++;
-        } else {
-            // Remaining choice is if human wins
-            console.log(`You win! ${lowerHumanChoice} beats ${computerChoice}.`);
-            humanScore ++;
-        };
-    };
-
-    // Loop the play round function 5 times simulate 5 games
-    for (let i = 0; i < 5; i++) {
-        // get a new user choice each time
-        const userSelection = getHumanChoice();
-
-        // get a new computer choice each time
-        const computerSelection = getComputerChoice();
-
-        // Run playRound function with new choice
-        playRound(userSelection, computerSelection);
+// Simulate a round of play between the computer and user
+function playRound(humanChoice,computerChoice) {
+    // convert human choice to lower case so game is none case sensitive
+    const lowerHumanChoice = humanChoice.toLowerCase();
+    // If the computer choice and human choice is the same it is a draw
+    if (lowerHumanChoice === computerChoice) {
+        resultsDisplay.textContent = (`You draw! You both chose ${lowerHumanChoice}`);
+        
+        // Exit function so next if statement does run
+        return;
     }
 
-    // Compare User's score against computer's score to determine winner
-    if (humanScore > computerScore) {
-        console.log(`You win! The score was ${humanScore}:${computerScore}`)
-    } else if (humanScore < computerScore) {
-        console.log(`You lose! The score was ${humanScore}:${computerScore}`)
+    // If human loses to computer
+    if ((lowerHumanChoice === "rock" && computerChoice === "paper")
+        || (lowerHumanChoice === "paper" && computerChoice === "scissors")
+        || (lowerHumanChoice  === "scissors" && computerChoice === "rock")
+    ) {
+        resultsDisplay.textContent = (`You lose! ${computerChoice} beats ${lowerHumanChoice}.`);
+        computerScore ++;
     } else {
-        console.log(`You drew! The score was ${humanScore}:${computerScore}`)};
+        // Remaining choice is if human wins
+        resultsDisplay.textContent = (`You win! ${lowerHumanChoice} beats ${computerChoice}.`);
+        playerScore ++;
+    };
+};
+
+function checkWinner() {
+    if (playerScore === 5) {
+        alert("Player Wins")
+        playerScore = 0;
+        computerScore = 0;
+    } else if (computerScore === 5) {
+        alert("Computer Wins")
+        playerScore = 0;
+        computerScore = 0;
+    }
 }
 
-playGame()
+// Get DOM nodes
+const optionButtons = document.querySelectorAll("button");
+const resultsDisplay = document.querySelector(".results") 
+
+optionButtons.forEach(item => {item.addEventListener("click",(event) => {
+    const playersChoice = event.target.id;
+    const computerChoice = getComputerChoice();
+
+    playRound(playersChoice, computerChoice);
+
+    const scoreBoard = document.createElement("p")
+    scoreBoard.textContent = `Player score:${playerScore} Computers Score:${computerScore}`
+    resultsDisplay.appendChild(scoreBoard)
+
+    checkWinner()
+})})
+

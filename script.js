@@ -56,12 +56,14 @@ function playRound(humanChoice,computerChoice) {
 };
 
 function checkWinner() {
+    const winnerMessage = document.createElement("p")
+    resultsDisplay.appendChild(winnerMessage)
     if (playerScore === 5) {
-        alert("Player Wins")
+        winnerMessage.textContent = "Player wins"
         playerScore = 0;
         computerScore = 0;
     } else if (computerScore === 5) {
-        alert("Computer Wins")
+        winnerMessage.textContent = "Computer wins"
         playerScore = 0;
         computerScore = 0;
     }
